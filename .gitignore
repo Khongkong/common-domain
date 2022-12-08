@@ -1,0 +1,45 @@
+# Global/Temp.gitiginore
+*~
+*.swp
+
+# Global/OSX.gitignore
+.DS_Store
+
+# Thumbnails
+._*
+
+# Files that might appear on external disk
+.Spotlight-V100
+.Trashes
+
+# Global/Windows.gitignore
+Thumbs.db
+Desktop.ini
+
+# NetBeans project files
+/nbproject/*
+
+# IntelliJ IDEA project files
+/.idea
+
+# Eclipse project files
+/.project
+/.buildpath
+/.settings
+
+# Composer files
+/vendor
+/composer.phar
+
+# Build files
+/build
+/crypt-console.phar
+
+# lock file
+composer.lock
+
+# cache from PHPUnit
+.phpunit.result.cache
+
+# VS Code files
+.vscode/

@@ -2,7 +2,8 @@
     "name": "khongkong/common-domain",
     "require": {
         "php": "^8.0",
-        "ramsey/uuid": "^4.6"
+        "ramsey/uuid": "^4.6",
+        "ext-mongodb": "*"
     }
     ,
     "require-dev": {
@@ -13,7 +14,11 @@
     },
     "autoload": {
         "psr-4": {
-            "KhongKong\\Domain\\Common\\": "src/",
+            "KhongKong\\Domain\\Common\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
             "Tests\\": "tests/"
         }
     },

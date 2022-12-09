@@ -2,7 +2,22 @@
 
 namespace KhongKong\Domain\Common\ValueObjects;
 
-interface ValueObject
+use KhongKong\Domain\Common\Exceptions\DomainException;
+use KhongKong\Domain\Common\ValueObjects\Contracts\ValueObject as ValueObjectContract;
+
+abstract class ValueObject implements ValueObjectContract
 {
-    public function equals(ValueObject $comparedVo): bool;
+    abstract protected function guard(): void;
+
+    abstract public function value(): mixed;
+
+    public function equals(ValueObjectContract $otherVo): bool
+    {
+        if ($otherVo::class !== static::class) {
+            throw new DomainException(
+                $otherVo::class . 'does not have the same type of value object with' . static::class
+            );
+        }
+        return $this->value() === $otherVo->value();
+    }
 }

@@ -4,8 +4,9 @@ namespace KhongKong\Domain\Common\ValueObjects;
 
 use KhongKong\Domain\Common\Exceptions\DomainException;
 use MongoDB\BSON\ObjectId as BSONObjectId;
+use Stringable;
 
-class MongoDbObjectId extends StringValue
+class MongoDbObjectId extends StringValue implements Stringable
 {
     public function random(): static
     {

@@ -19,6 +19,15 @@ final class Money extends IntegerValue
         return new self($this->value() + $money->value());
     }
 
+    /**
+     * @param Money[] $moneyBatch
+     */
+    public function addBatch(array $moneyBatch): self
+    {
+        return array_reduce($moneyBatch, fn (?Money $carry, Money $item): Money
+            => ($carry ?? $this)->add($item));
+    }
+
     public function subtract(self $money): self
     {
         return new self($this->value() - $money->value());

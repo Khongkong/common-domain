@@ -53,6 +53,25 @@ class QuantityTest extends TestCase
     /**
      * @test
      */
+    public function canAddALotOfQuantities(): void
+    {
+        $quantities = [
+            new Quantity(10),
+            new Quantity(20),
+            new Quantity(30),
+        ];
+        $totalQuantitiesValue = 10 + 20 + 30;
+        $originalValue = 777;
+        $originalQuantity = new Quantity($originalValue);
+        $this->assertSame(
+            $originalValue + $totalQuantitiesValue,
+            $originalQuantity->addBatch($quantities)->value()
+        );
+    }
+
+    /**
+     * @test
+     */
     public function canSubtractToAnotherQuantity(): void
     {
         $quantity = new Quantity(30);

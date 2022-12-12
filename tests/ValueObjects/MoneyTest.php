@@ -53,6 +53,25 @@ class MoneyTest extends TestCase
     /**
      * @test
      */
+    public function canAddALotOfMoney(): void
+    {
+        $moneyBatch = [
+            new Money(10),
+            new Money(20),
+            new Money(30),
+        ];
+        $moneyBatchSum = 10 + 20 + 30;
+        $originalValue = 777;
+        $originalMoney = new Money($originalValue);
+        $this->assertSame(
+            $originalValue + $moneyBatchSum,
+            $originalMoney->addBatch($moneyBatch)->value()
+        );
+    }
+
+    /**
+     * @test
+     */
     public function canSubtractToAnotherMoney(): void
     {
         $money = new Money(30);

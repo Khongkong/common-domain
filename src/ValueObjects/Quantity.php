@@ -19,6 +19,15 @@ final class Quantity extends IntegerValue
         return new self($this->value() + $quantity->value());
     }
 
+    /**
+     * @param Quantity[] $quantities
+     */
+    public function addBatch(array $quantities): self
+    {
+        return array_reduce($quantities, fn (?Quantity $carry, Quantity $item): Quantity
+            => ($carry ?? $this)->add($item));
+    }
+
     public function subtract(self $quantity): self
     {
         return new self($this->value() - $quantity->value());

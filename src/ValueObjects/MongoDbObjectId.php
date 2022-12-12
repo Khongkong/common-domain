@@ -21,7 +21,8 @@ class MongoDbObjectId extends StringValue implements Stringable
     protected function guard(): void
     {
         /** @link https://github.com/mongodb/mongo-php-driver/issues/509#issuecomment-271297971 */
-        if (strlen($this->value) === 24 &&
+        if (
+            strlen($this->value) === 24 &&
             strspn($this->value, '0123456789ABCDEFabcdef') === 24
         ) {
             return;

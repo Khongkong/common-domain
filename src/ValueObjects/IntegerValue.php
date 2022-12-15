@@ -4,7 +4,7 @@ namespace KhongKong\Domain\Common\ValueObjects;
 
 abstract class IntegerValue extends ValueObject
 {
-    public function __construct(protected int $value)
+    public function __construct(protected readonly int $value)
     {
         $this->guard();
     }

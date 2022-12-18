@@ -6,7 +6,7 @@ use KhongKong\Domain\Common\Exceptions\DomainException;
 use Ramsey\Uuid\Uuid as RamseyUuid;
 use Stringable;
 
-class Uuid extends StringValue implements Stringable
+readonly class Uuid extends StringValue implements Stringable
 {
     private const REGEX_PATTERN = '/^[a-f\d]{8}(-[a-f\d]{4}){4}[a-f\d]{8}$/i';
 

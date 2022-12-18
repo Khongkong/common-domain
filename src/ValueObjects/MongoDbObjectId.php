@@ -6,7 +6,7 @@ use KhongKong\Domain\Common\Exceptions\DomainException;
 use MongoDB\BSON\ObjectId as BSONObjectId;
 use Stringable;
 
-class MongoDbObjectId extends StringValue implements Stringable
+readonly class MongoDbObjectId extends StringValue implements Stringable
 {
     public function random(): static
     {

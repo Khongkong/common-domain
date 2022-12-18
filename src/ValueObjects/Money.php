@@ -4,7 +4,7 @@ namespace KhongKong\Domain\Common\ValueObjects;
 
 use KhongKong\Domain\Common\Exceptions\DomainException;
 
-final class Money extends IntegerValue
+final readonly class Money extends IntegerValue
 {
     protected function guard(): void
     {

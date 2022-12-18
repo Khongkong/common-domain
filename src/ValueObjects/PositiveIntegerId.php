@@ -5,7 +5,7 @@ namespace KhongKong\Domain\Common\ValueObjects;
 use KhongKong\Domain\Common\Exceptions\DomainException;
 use Stringable;
 
-class PositiveIntegerId extends IntegerValue implements Stringable
+readonly class PositiveIntegerId extends IntegerValue implements Stringable
 {
     protected function guard(): void
     {

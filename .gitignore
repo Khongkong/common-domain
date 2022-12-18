@@ -41,5 +41,8 @@ composer.lock
 # cache from PHPUnit
 .phpunit.result.cache
 
+# cache from PHPCsniffer
+.phpcs-cache
+
 # VS Code files
 .vscode/

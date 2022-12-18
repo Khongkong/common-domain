@@ -1,7 +1,7 @@
 {
     "name": "khongkong/common-domain",
     "require": {
-        "php": "^8.1",
+        "php": "^8.2",
         "ramsey/uuid": "^4.6",
         "ext-mongodb": "*"
     }
@@ -32,7 +32,7 @@
     },
     "scripts": {
         "test": "vendor/bin/phpunit",
-        "phpcs": "vendor/bin/phpcs",
+        "phpcs": "vendor/bin/phpcs --cache=.phpcs-cache --standard=phpcs.xml --extensions=php -sp",
         "phpcbf": "vendor/bin/phpcbf"
     },
     "minimum-stability": "dev"

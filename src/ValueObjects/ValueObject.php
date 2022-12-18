@@ -5,7 +5,7 @@ namespace KhongKong\Domain\Common\ValueObjects;
 use KhongKong\Domain\Common\Exceptions\DomainException;
 use KhongKong\Domain\Common\ValueObjects\Contracts\ValueObject as ValueObjectContract;
 
-abstract class ValueObject implements ValueObjectContract
+abstract readonly class ValueObject implements ValueObjectContract
 {
     abstract protected function guard(): void;
 

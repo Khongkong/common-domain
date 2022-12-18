@@ -2,7 +2,7 @@
 
 namespace KhongKong\Domain\Common\ValueObjects;
 
-abstract class IntegerValue extends ValueObject
+abstract readonly class IntegerValue extends ValueObject
 {
     public function __construct(protected readonly int $value)
     {

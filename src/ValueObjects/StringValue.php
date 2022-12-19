@@ -4,7 +4,7 @@ namespace KhongKong\Domain\Common\ValueObjects;
 
 abstract readonly class StringValue extends ValueObject
 {
-    public function __construct(protected readonly string $value)
+    public function __construct(protected string $value)
     {
         $this->guard();
     }

@@ -3,40 +3,17 @@
 namespace Tests\ValueObjects;
 
 use KhongKong\Domain\Common\Exceptions\DomainException;
-use KhongKong\Domain\Common\ValueObjects\Contracts\ValueObject as ValueObjectContract;
 use Tests\Dummies\ValueObjects\IntVoDummy;
 use Tests\Dummies\ValueObjects\StringVoDummy;
-use Tests\TestCase;
 
-class ValueObjectTest extends TestCase
-{
-    /**
-     * @test
-     */
-    public function shouldBeEqualWhenTwoValueObjectsAreOfTheSameClassWithTheSameValue(): void
-    {
-        $vo = $this->createIntVo(3);
-        $this->assertTrue($vo->equals($this->createIntVo(3)));
-    }
+it('should be equal between two value objects with the same class and value', function () {
+    expect(IntVoDummy::create(1)->equals(IntVoDummy::create(1)))->toBeTrue();
+    expect(StringVoDummy::create('test')->equals(StringVoDummy::create('test')))->toBeTrue();
+});
 
-    /**
-     * @test
-     */
-    public function shouldNotBeEqualWhenTwoValueObjectsAreNotOfTheSameClass(): void
-    {
-        $this->expectException(DomainException::class);
-        $vo = $this->createIntVo(3);
-        $otherVo = $this->createStringVo('3');
-        $vo->equals($otherVo);
-    }
-
-    private function createIntVo(int $value = 0): ValueObjectContract
-    {
-        return new IntVoDummy($value);
-    }
-
-    private function createStringVo(string $value = ''): ValueObjectContract
-    {
-        return new StringVoDummy($value);
-    }
-}
+it('throws exception when two value objects with different class', function () {
+    IntVoDummy::create(1)->equals(StringVoDummy::create(1));
+})->throws(
+    DomainException::class,
+    StringVoDummy::class . 'does not have the same type of value object with' . IntVoDummy::class
+);

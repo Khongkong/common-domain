@@ -4,100 +4,54 @@ namespace Tests\ValueObjects;
 
 use KhongKong\Domain\Common\Exceptions\DomainException;
 use KhongKong\Domain\Common\ValueObjects\Quantity;
-use Tests\TestCase;
 
-class QuantityTest extends TestCase
-{
-    /**
-     * @test
-     * @dataProvider nonNegativeProvider
-     */
-    public function canBeCreatedFromNonNegativeInteger(int $expectedValue): void
-    {
-        $quantity = new Quantity($expectedValue);
-        $this->assertSame($expectedValue, $quantity->value());
-    }
+it('can be created from non-negative integer', function (int $value): void {
+    expect((new Quantity($value))->value())->toBe($value);
+})->with([
+    'zero' => 0,
+    'positive' => 1,
+]);
 
-    public function nonNegativeProvider(): array
-    {
-        return [
-            'zero' => [0],
-            'positive' => [1],
-        ];
-    }
+it('throws exception when negative value is given', function (): void {
+    new Quantity(-1);
+})->throws(
+    DomainException::class,
+    'Quantity must be greater than zero'
+);
 
-    /**
-     * @test
-     */
-    public function shouldEncounterExceptionWhenTheValueIsLessThanZero(): void
-    {
-        $this->expectException(DomainException::class);
-        $this->expectExceptionMessage('Quantity must be greater than zero');
-        new Quantity(-1);
-    }
+it('can add two quantity amounts', function (int $addedValue, int $addingValue): void {
+    expect((new Quantity($addedValue))->add(new Quantity($addingValue))->value())
+        ->toBe($addedValue + $addingValue);
+})->with([
+    [random_int(0, 10000), random_int(0, 10000)],
+    [random_int(0, 10000), random_int(0, 10000)],
+]);
 
-    /**
-     * @test
-     */
-    public function canAddToAnotherQuantity(): void
-    {
-        $quantity = new Quantity(10);
-        $anotherQuantity = new Quantity(20);
-        $expectedQuantity = $quantity->add($anotherQuantity);
+it('can add a lot of quantity', function (): void {
+    $quantityBatch = [
+        new Quantity(random_int(0, 10000)),
+        new Quantity(random_int(0, 10000)),
+        new Quantity(random_int(0, 10000)),
+        new Quantity(random_int(0, 10000)),
+    ];
+    $originalQuantity = new Quantity(666);
+    $batchExpectedValue = array_reduce($quantityBatch, static fn (int $carry, Quantity $quantity): int
+    => $carry + $quantity->value(), 0);
+    expect($originalQuantity->addBatch($quantityBatch)->value())
+        ->toBe($originalQuantity->value() + $batchExpectedValue);
+});
 
-        // the add method should create a new quantity
-        $this->assertNotSame($expectedQuantity, $quantity);
-        $this->assertSame($expectedQuantity->value(), $quantity->value() + $anotherQuantity->value());
-    }
+it('can subtract to another quantity', function (): void {
+    $quantity = new Quantity(30);
+    $anotherQuantity = new Quantity(20);
 
-    /**
-     * @test
-     */
-    public function canAddALotOfQuantities(): void
-    {
-        $quantities = [
-            new Quantity(10),
-            new Quantity(20),
-            new Quantity(30),
-        ];
-        $totalQuantitiesValue = 10 + 20 + 30;
-        $originalValue = 777;
-        $originalQuantity = new Quantity($originalValue);
-        $this->assertSame(
-            $originalValue + $totalQuantitiesValue,
-            $originalQuantity->addBatch($quantities)->value()
-        );
-    }
+    expect($quantity->subtract($anotherQuantity)->value())
+        ->toBe($quantity->value() - $anotherQuantity->value());
+});
 
-    /**
-     * @test
-     */
-    public function canSubtractToAnotherQuantity(): void
-    {
-        $quantity = new Quantity(30);
-        $anotherQuantity = new Quantity(20);
-        $expectedQuantity = $quantity->subtract($anotherQuantity);
-
-        // the subtract method should create a new quantity
-        $this->assertNotSame($expectedQuantity, $quantity);
-        $this->assertSame($expectedQuantity->value(), $quantity->value() - $anotherQuantity->value());
-    }
-
-    /**
-     * @test
-     */
-    public function shouldEncounterExceptionWhenMinuendIsLessThanSubtrahend(): void
-    {
-        $this->expectException(DomainException::class);
-        $this->expectExceptionMessage('Quantity must be greater than zero');
-        (new Quantity(3))->subtract(new Quantity(5));
-    }
-
-    /**
-     * @test
-     */
-    public function shouldExpectZeroValue(): void
-    {
-        $this->assertSame(Quantity::zero()->value(), 0);
-    }
-}
+it('throws exception when minuend is less than subtrahend', function (): void {
+    (new Quantity(3))->subtract(new Quantity(5));
+})->throws(
+    DomainException::class,
+    'Quantity must be greater than zero'
+);

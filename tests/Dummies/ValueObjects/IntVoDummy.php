@@ -19,4 +19,9 @@ readonly class IntVoDummy extends ValueObject
     {
         return $this->value;
     }
+
+    public static function create(int $value): self
+    {
+        return new self($value);
+    }
 }

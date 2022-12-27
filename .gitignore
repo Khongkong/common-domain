@@ -40,6 +40,7 @@ composer.lock
 
 # cache from PHPUnit
 .phpunit.result.cache
+.phpunit.cache/
 
 # cache from PHPCsniffer
 .phpcs-cache

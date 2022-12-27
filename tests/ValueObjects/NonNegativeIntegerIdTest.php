@@ -4,33 +4,17 @@ namespace Tests\ValueObjects;
 
 use KhongKong\Domain\Common\Exceptions\DomainException;
 use KhongKong\Domain\Common\ValueObjects\NonNegativeIntegerId;
-use Tests\TestCase;
 
-class NonNegativeIntegerIdTest extends TestCase
-{
-    /**
-     * @test
-     * @dataProvider validIdProvider
-     */
-    public function canCreateIdSuccessfully(int $expectedValue): void
-    {
-        $this->assertSame($expectedValue, (new NonNegativeIntegerId($expectedValue))->value());
-    }
+it('can be created', function (int $value): void {
+    expect((new NonNegativeIntegerId($value))->value())->toBe($value);
+})->with([
+    0,
+    938434872383,
+]);
 
-    public function validIdProvider(): array
-    {
-        return [
-            [0],
-            [11666],
-        ];
-    }
-
-    /**
-     * @test
-     */
-    public function shouldEncounterExceptionWhenInvalidIntegerIsGiven(): void
-    {
-        $this->expectException(DomainException::class);
-        new NonNegativeIntegerId(-1);
-    }
-}
+it('throws exception', function (): void {
+    new NonNegativeIntegerId(-1);
+})->throws(
+    DomainException::class,
+    'The id must be non negative'
+);
